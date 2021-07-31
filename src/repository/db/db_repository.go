@@ -14,7 +14,6 @@ type DbRepository interface {
 }
 
 type dbRepository struct {
-
 }
 
 func (r *dbRepository) GetById(id string) (*access_token.AccessToken, *errors.RestErr) {
