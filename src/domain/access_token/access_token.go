@@ -18,7 +18,6 @@ type AccessToken struct {
 }
 
 func (at *AccessToken) Validate() *errors.RestErr {
-	// No data is passed from access_token_http
 	at.AccessToken = strings.TrimSpace(at.AccessToken)
 	if at.AccessToken == "" {
 		return errors.NewBadRequestError("invalid access token id")
