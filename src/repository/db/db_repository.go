@@ -8,9 +8,9 @@ import (
 )
 
 const (
-	queryGetAccessToken="SELECT access_token, user_id, client_id, expires FROM access_tokens WHERE access_token=?; "
-	queryCreateAccessToken ="INSERT INTO access_tokens(access_token, user_id, client_id, expires) VALUES (?, ?, ?, ?)"
-	queryUpdateExpires = "UPDATE access_tokens SET expires=? WHERE access_token=?"
+	queryGetAccessToken    = "SELECT access_token, user_id, client_id, expires FROM access_tokens WHERE access_token=?; "
+	queryCreateAccessToken = "INSERT INTO access_tokens(access_token, user_id, client_id, expires) VALUES (?, ?, ?, ?)"
+	queryUpdateExpires     = "UPDATE access_tokens SET expires=? WHERE access_token=?"
 )
 
 func NewRepository() DbRepository {
@@ -33,7 +33,7 @@ func (r *dbRepository) GetById(id string) (*access_token.AccessToken, *errors.Re
 		&result.UserId,
 		&result.ClientId,
 		&result.Expires,
-		); err != nil {
+	); err != nil {
 
 		if err == gocql.ErrNotFound {
 			return nil, errors.NewNotFoundError("no access token found")
@@ -60,7 +60,7 @@ func (r *dbRepository) UpdateExpirationTime(at access_token.AccessToken) *errors
 	if err := cassandra.GetSession().Query(queryUpdateExpires,
 		at.Expires,
 		at.AccessToken,
-		).Exec(); err != nil {
+	).Exec(); err != nil {
 		return errors.NewInternalServerError(err.Error())
 	}
 
